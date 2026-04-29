@@ -1,19 +1,20 @@
 const express = require("express");
 const cors = require("cors");
-const blogRoutes = require("./routes/blog.routes");
+
 const app = express();
 
-app.use("/blogs", blogRoutes);
-app.use(cors());
+// ✅ THIS LINE IS CRITICAL
 app.use(express.json());
 
-// Health check
+app.use(cors());
+
+// routes
+const blogRoutes = require("./routes/blog.routes");
+app.use("/blogs", blogRoutes);
+
+// health check
 app.get("/", (req, res) => {
-  console.log(JSON.stringify({
-    level: "info",
-    message: "Health check hit"
-  }));
-  res.send("Backend is running");
+  res.send("Backend running");
 });
 
 app.listen(3000, () => {
