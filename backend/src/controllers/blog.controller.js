@@ -1,0 +1,33 @@
+let blogs = [];
+
+// Create blog
+const createBlog = (req, res) => {
+  const { title, content, tags } = req.body;
+
+  const newBlog = {
+    id: Date.now(),
+    title,
+    content,
+    tags
+  };
+
+  blogs.push(newBlog);
+
+  console.log(JSON.stringify({
+    level: "info",
+    message: "Blog created",
+    blogId: newBlog.id
+  }));
+
+  res.json(newBlog);
+};
+
+// Get all blogs
+const getBlogs = (req, res) => {
+  res.json(blogs);
+};
+
+module.exports = {
+  createBlog,
+  getBlogs
+};
