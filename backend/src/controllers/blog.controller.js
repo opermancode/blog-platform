@@ -1,14 +1,18 @@
-let blogs = [];
+let blogs = []; // temporary (we'll replace with DB later)
 
 // Create blog
 const createBlog = (req, res) => {
   const { title, content, tags } = req.body;
 
+  if (!title || !content) {
+    return res.status(400).json({ message: "Title and content required" });
+  }
+
   const newBlog = {
     id: Date.now(),
     title,
     content,
-    tags
+    tags: tags || []
   };
 
   blogs.push(newBlog);
@@ -19,11 +23,16 @@ const createBlog = (req, res) => {
     blogId: newBlog.id
   }));
 
-  res.json(newBlog);
+  res.status(201).json(newBlog);
 };
 
 // Get all blogs
 const getBlogs = (req, res) => {
+  console.log(JSON.stringify({
+    level: "info",
+    message: "Fetching all blogs"
+  }));
+
   res.json(blogs);
 };
 
